@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -49,6 +52,7 @@ fun Calculadora() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .background(Color.Gray)
     ) {
         // Visor da calculadora
         Text(
@@ -57,9 +61,11 @@ fun Calculadora() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .height(40.dp),
+                .height(40.dp)
+                .background(Color.LightGray)
+                .border(2.dp, Color.Black),
             fontSize = 32.sp // Tamanho da fonte do visor
-                    color = Color.Yellow
+
 
         )
 
@@ -72,25 +78,29 @@ fun Calculadora() {
                 .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { displayText = "MRC" }, modifier = Modifier.weight(1f)) {
+            Button(onClick = { displayText = "MRC" }, modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(Color.Black)) {
                 Text(text = "MRC")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "M-" }, modifier = Modifier.weight(1f)) {
+            Button(onClick = { displayText = "M-" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.Black)) {
                 Text(text = "M-")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "M+" }, modifier = Modifier.weight(1f)) {
+            Button(onClick = { displayText = "M+" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.Black)) {
                 Text(text = "M+")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "On/C" }, modifier = Modifier.weight(1f)) {
+            Button(onClick = { displayText = "On/C" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.Red)) {
                 Text(text = "On/C")
             }
         }
@@ -102,26 +112,30 @@ fun Calculadora() {
                 .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { displayText = "7" }, modifier = Modifier.weight(1f)) {
-                Text(text = "7")
+            Button(onClick = { displayText = "sqr" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.Black)) {
+                Text(text = "sqr")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "8" }, modifier = Modifier.weight(1f)) {
-                Text(text = "8")
+            Button(onClick = { displayText = "%" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.Black)) {
+                Text(text = "%")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "9" }, modifier = Modifier.weight(1f)) {
-                Text(text = "9")
+            Button(onClick = { displayText = "+/-" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.Black)) {
+                Text(text = "+/-")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "/" }, modifier = Modifier.weight(1f)) {
-                Text(text = "/")
+            Button(onClick = { displayText = "CE" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.Red)) {
+                Text(text = "CE")
             }
         }
 
@@ -132,26 +146,30 @@ fun Calculadora() {
                 .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { displayText = "4" }, modifier = Modifier.weight(1f)) {
-                Text(text = "4")
+            Button(onClick = { displayText = "7" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "7")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "5" }, modifier = Modifier.weight(1f)) {
-                Text(text = "5")
+            Button(onClick = { displayText = "8" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "8")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "6" }, modifier = Modifier.weight(1f)) {
-                Text(text = "6")
+            Button(onClick = { displayText = "9" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "9")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "*" }, modifier = Modifier.weight(1f)) {
-                Text(text = "*")
+            Button(onClick = { displayText = "/" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "/")
             }
         }
 
@@ -162,55 +180,96 @@ fun Calculadora() {
                 .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { displayText = "1" }, modifier = Modifier.weight(1f)) {
-                Text(text = "1")
+            Button(onClick = { displayText = "4" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "4")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "2" }, modifier = Modifier.weight(1f)) {
-                Text(text = "2")
+            Button(onClick = { displayText = "5" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "5")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "3" }, modifier = Modifier.weight(1f)) {
-                Text(text = "3")
+            Button(onClick = { displayText = "6" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "6")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "-" }, modifier = Modifier.weight(1f)) {
-                Text(text = "-")
+            Button(onClick = { displayText = "*" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "*")
             }
         }
 
-        // Última linha de botões
+        // Quinta linha de botões
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { displayText = "0" }, modifier = Modifier.weight(1f)) {
+            Button(onClick = { displayText = "1" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "1")
+            }
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Button(onClick = { displayText = "2" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "2")
+            }
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Button(onClick = { displayText = "3" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "3")
+            }
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Button(onClick = { displayText = "-" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
+                Text(text = "-")
+            }
+        }
+        // Quinta linha de botões
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Button(onClick = { displayText = "0" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
                 Text(text = "0")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "." }, modifier = Modifier.weight(1f)) {
+            Button(onClick = { displayText = "." }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
                 Text(text = ".")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "=" }, modifier = Modifier.weight(1f)) {
+            Button(onClick = { displayText = "=" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
                 Text(text = "=")
             }
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Button(onClick = { displayText = "+" }, modifier = Modifier.weight(1f)) {
+            Button(onClick = { displayText = "+" }, modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray)) {
                 Text(text = "+")
             }
         }
