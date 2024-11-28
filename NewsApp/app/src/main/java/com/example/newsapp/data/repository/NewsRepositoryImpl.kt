@@ -1,0 +1,19 @@
+package com.example.newsapp.data.repository
+
+import com.example.newsapp.data.remote.api.NewsApi
+import com.example.newsapp.domain.model.News
+import com.example.newsapp.domain.repository.NewsRepository
+
+class NewsRepositoryImpl(private val api: NewsApi) : NewsRepository {
+    override suspend fun getNews(section: String): List<News> {
+        val response = api.getTopStories(section, "dAKO3KZi9qznSKZFG8uJljpI9aiQRA04")
+        return response.body()?.results?.map { dto ->
+            News(
+                title = dto.title,
+                description = dto.abstract,
+                imageUrl = dto.multimedia.firstOrNull()?.url ?: "",
+                link = dto.url
+            )
+        } ?: emptyList()
+    }
+}
