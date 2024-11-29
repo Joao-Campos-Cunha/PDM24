@@ -1,5 +1,6 @@
 package com.example.newsapp.presentation.news_detail
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
@@ -25,6 +26,7 @@ fun NewsDetailScreen(
     }
 
     val newsDetail = viewModel.newsDetail.collectAsState().value
+    val backgroundColor = Color(0xFFF5F5F5) // Cinza muito claro
 
     if (newsDetail == null) {
         Text("Loading details...")
@@ -33,12 +35,14 @@ fun NewsDetailScreen(
             modifier = Modifier
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
+                .background(backgroundColor)
         ) {
             Text(
                 text = newsDetail.title,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
+            
             Text(
                 text = newsDetail.description,
                 style = MaterialTheme.typography.bodyMedium,
