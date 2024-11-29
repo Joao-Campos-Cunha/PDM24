@@ -9,9 +9,10 @@ interface NewsApi {
     @GET("svc/topstories/v2/{section}.json")
     suspend fun getTopStories(
         @Path("section") section: String,
-        @Query("dAKO3KZi9qznSKZFG8uJljpI9aiQRA04") apiKey: String
-    ):  retrofit2.Response<NewsResponse>
+        @Query("api-key") apiKey: String
+    ): retrofit2.Response<NewsResponse>
 }
+
 
 data class NewsResponse(val results: List<NewsDto>)
 

@@ -5,7 +5,7 @@ data class NewsDto(
     val title: String,
     val abstract: String,
     val url: String,
-    val multimedia: List<MultimediaDto>
+    val multimedia: List<MultimediaDto>?
 )
 
 data class MultimediaDto(

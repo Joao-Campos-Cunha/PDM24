@@ -19,6 +19,10 @@ import com.example.newsapp.domain.repository.NewsRepository
 import com.example.newsapp.presentation.news_detail.NewsDetailScreen
 import com.example.newsapp.presentation.news_list.NewsListScreen
 import com.example.newsapp.presentation.news_list.NewsViewModel
+import android.net.Uri
+import androidx.compose.runtime.remember
+import com.example.newsapp.presentation.news_detail.NewsDetailViewModel
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +37,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NewsApp(repository: NewsRepository) {
     val navController = rememberNavController()
+    val viewModel = remember { NewsViewModel(repository) } // Armazena o mesmo ViewModel
 
     NavHost(
         navController = navController,
@@ -40,11 +45,10 @@ fun NewsApp(repository: NewsRepository) {
     ) {
         // Tela de Listagem de Notícias
         composable("news_list") {
-            val viewModel = NewsViewModel(repository)
             NewsListScreen(
                 viewModel = viewModel,
                 onNewsClick = { news ->
-                    navController.navigate("news_detail/${news.title}") // `news.title` deve existir
+                    navController.navigate("news_detail/${Uri.encode(news.title)}")
                 }
             )
         }
@@ -54,14 +58,10 @@ fun NewsApp(repository: NewsRepository) {
             route = "news_detail/{newsTitle}",
             arguments = listOf(navArgument("newsTitle") { type = NavType.StringType })
         ) { backStackEntry ->
-            val newsTitle = backStackEntry.arguments?.getString("newsTitle") ?: ""
-            val dummyNews = News(
-                title = newsTitle,
-                description = "Description of $newsTitle",
-                imageUrl = "",
-                link = ""
-            )
-            NewsDetailScreen(news = dummyNews)
+            val newsTitle = Uri.decode(backStackEntry.arguments?.getString("newsTitle")) ?: ""
+            val viewModel = remember { NewsDetailViewModel(repository) } // Crie ou lembre o ViewModel
+            NewsDetailScreen(newsTitle = newsTitle, viewModel = viewModel)
+
         }
     }
 }
