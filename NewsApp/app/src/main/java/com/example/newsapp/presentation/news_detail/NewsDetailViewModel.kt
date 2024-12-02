@@ -15,11 +15,11 @@ class NewsDetailViewModel(private val repository: NewsRepository) : ViewModel() 
     fun fetchNewsDetail(title: String) {
         viewModelScope.launch {
             try {
-                // Exemplo simples: busca notícia pelo título
+                // carrega notícia pelo título
                 val news = repository.getNews("technology").find { it.title == title }
                 _newsDetail.value = news
             } catch (e: Exception) {
-                println("Erro ao buscar detalhes da notícia: ${e.message}")
+                println("Erro ao carregar detalhes da notícia: ${e.message}")
                 _newsDetail.value = null
             }
         }

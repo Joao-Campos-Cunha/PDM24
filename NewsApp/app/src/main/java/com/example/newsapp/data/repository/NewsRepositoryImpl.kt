@@ -17,7 +17,7 @@ class NewsRepositoryImpl(private val api: NewsApi) : NewsRepository {
                 )
             } ?: emptyList()
         } else {
-            println("Erro ao buscar notícias: ${response.errorBody()?.string()}")
+            println("Erro ao carregar notícias: ${response.errorBody()?.string()}")
             return emptyList()
         }
     }

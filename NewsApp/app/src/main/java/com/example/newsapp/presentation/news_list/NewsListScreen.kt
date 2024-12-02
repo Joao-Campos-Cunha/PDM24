@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +30,6 @@ fun NewsListScreen(
     viewModel: NewsViewModel,
     onNewsClick: (News) -> Unit
 ) {
-    // Chama fetchNews() ao carregar a tela
     LaunchedEffect(Unit) {
         viewModel.fetchNews("technology")
     }
@@ -40,7 +39,6 @@ fun NewsListScreen(
 
 
     Column {
-        // Título da Tela
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -77,7 +75,7 @@ fun NewsListScreen(
                         news = news,
                         onClick = { onNewsClick(news) }
                     )
-                    Divider(color = Color.Gray, thickness = 1.dp) // Linha separadora entre notícias
+                    HorizontalDivider(color = Color.Gray, thickness = 1.dp)
                 }
             }
         }
@@ -93,11 +91,10 @@ fun NewsItem(news: News, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .background(backgroundColor)
-            .border(BorderStroke(1.dp, Color.LightGray)) // Borda ao redor do item
+            .border(BorderStroke(1.dp, Color.LightGray))
             .padding(16.dp)
     ) {
         Column(modifier = Modifier.clickable { onClick() }) {
-            // Título da Notícia
             Text(
                 text = news.title,
                 style = MaterialTheme.typography.titleMedium,

@@ -1,12 +1,11 @@
 package com.example.newsapp
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.remember
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,14 +13,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.newsapp.data.remote.api.RetrofitInstance
 import com.example.newsapp.data.repository.NewsRepositoryImpl
-import com.example.newsapp.domain.model.News
 import com.example.newsapp.domain.repository.NewsRepository
 import com.example.newsapp.presentation.news_detail.NewsDetailScreen
+import com.example.newsapp.presentation.news_detail.NewsDetailViewModel
 import com.example.newsapp.presentation.news_list.NewsListScreen
 import com.example.newsapp.presentation.news_list.NewsViewModel
-import android.net.Uri
-import androidx.compose.runtime.remember
-import com.example.newsapp.presentation.news_detail.NewsDetailViewModel
 
 
 class MainActivity : ComponentActivity() {
@@ -43,7 +39,7 @@ fun NewsApp(repository: NewsRepository) {
         navController = navController,
         startDestination = "news_list"
     ) {
-        // Tela de Listagem de Notícias
+        // Ecra listas de Notícias
         composable("news_list") {
             NewsListScreen(
                 viewModel = viewModel,
@@ -53,13 +49,13 @@ fun NewsApp(repository: NewsRepository) {
             )
         }
 
-        // Tela de Detalhes de uma Notícia
+        // Ecra de Detalhes de Notícias
         composable(
             route = "news_detail/{newsTitle}",
             arguments = listOf(navArgument("newsTitle") { type = NavType.StringType })
         ) { backStackEntry ->
             val newsTitle = Uri.decode(backStackEntry.arguments?.getString("newsTitle")) ?: ""
-            val viewModel = remember { NewsDetailViewModel(repository) } // Crie ou lembre o ViewModel
+            val viewModel = remember { NewsDetailViewModel(repository) }
             NewsDetailScreen(newsTitle = newsTitle, viewModel = viewModel)
 
         }

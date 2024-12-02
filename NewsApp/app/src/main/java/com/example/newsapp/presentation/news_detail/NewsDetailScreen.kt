@@ -1,7 +1,6 @@
 package com.example.newsapp.presentation.news_detail
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,7 +18,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.newsapp.domain.model.News
 
 @Composable
 fun NewsDetailScreen(
@@ -31,7 +29,6 @@ fun NewsDetailScreen(
     }
 
     val newsDetail = viewModel.newsDetail.collectAsState().value
-    val backgroundColor = Color(0xFFF5F5F5) // Cinza muito claro
 
     if (newsDetail == null) {
         Text("Loading details...")
@@ -40,7 +37,6 @@ fun NewsDetailScreen(
             modifier = Modifier
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
-                .background(backgroundColor)
         ) {
             Text(
                 text = newsDetail.title,

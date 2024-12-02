@@ -15,17 +15,15 @@ class NewsViewModel(private val repository: NewsRepository) : ViewModel() {
 
     // Estado de carregamento
     private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading
 
-    // Função para buscar notícias
+    // Função para carregar notícias
     fun fetchNews(section: String) {
         viewModelScope.launch {
             _isLoading.value = true // Inicia o estado de carregamento
             try {
-                _news.value = repository.getNews(section) // Busca as notícias
+                _news.value = repository.getNews(section) // carrega as notícias
             } catch (e: Exception) {
-                // Logar o erro (opcional)
-                println("Erro ao buscar notícias: ${e.message}")
+                println("Erro ao carregar notícias: ${e.message}")
                 _news.value = emptyList() // Atualiza com lista vazia em caso de erro
             } finally {
                 _isLoading.value = false // Finaliza o estado de carregamento
