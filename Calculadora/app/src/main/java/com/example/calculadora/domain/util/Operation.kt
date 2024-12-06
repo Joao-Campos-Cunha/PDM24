@@ -1,5 +1,8 @@
 package com.example.calculadora.domain.util
 
-enum class Operation {
-    ADD, SUBTRACT, MULTIPLY, DIVIDE
+enum class Operation(val symbol: String) {
+    ADD("+"),
+    SUBTRACT("-"),
+    MULTIPLY("×"),
+    DIVIDE("÷")
 }

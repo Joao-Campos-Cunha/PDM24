@@ -8,19 +8,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-
+import androidx.compose.ui.unit.sp
 
 @Composable
-fun Display(text: String) {
+fun Display(text: String, operationText: String) {
+    val displayContent = if (operationText.isNotEmpty()) operationText else text
     Text(
-        text = text,
+        text = displayContent,
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.LightGray)
             .padding(16.dp),
+        fontSize = 48.sp,
+        color = Color.Black,
+        fontWeight = FontWeight.Bold,
         textAlign = TextAlign.End,
         style = MaterialTheme.typography.headlineLarge
     )
 }
+

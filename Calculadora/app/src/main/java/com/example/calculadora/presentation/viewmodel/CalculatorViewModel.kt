@@ -15,37 +15,89 @@ class CalculatorViewModel : ViewModel() {
 
         when (label) {
             in "0".."9", "." -> {
-                val updatedText = if (currentState.operation == null) {
-                    currentState.firstOperand + label
+                if (currentState.isResultDisplayed) {
+                    // Reinicia a operação após exibir o resultado
+                    _state.value = CalculatorState(
+                        firstOperand = label,
+                        displayText = label,
+                        operationText = label // Mostra apenas o número
+                    )
                 } else {
-                    currentState.secondOperand + label
-                }
-                _state.value = if (currentState.operation == null) {
-                    currentState.copy(firstOperand = updatedText, displayText = updatedText)
-                } else {
-                    currentState.copy(secondOperand = updatedText, displayText = updatedText)
+                    val updatedText = if (currentState.operation == null) {
+                        currentState.firstOperand + label
+                    } else {
+                        currentState.secondOperand + label
+                    }
+
+                    _state.value = if (currentState.operation == null) {
+                        currentState.copy(
+                            firstOperand = updatedText,
+                            displayText = updatedText,
+                            operationText = updatedText // Atualiza o texto da operação
+                        )
+                    } else {
+                        _state.value.copy(
+                            secondOperand = updatedText,
+                            displayText = updatedText,
+                            operationText = currentState.firstOperand +
+                                    (currentState.operation?.symbol ?: "") + updatedText // Concatena a operação
+                        )
+                    }
                 }
             }
+
             "+", "-", "×", "÷" -> {
-                val result = calculateResult(
-                    currentState.firstOperand.toDoubleOrNull(),
-                    currentState.secondOperand.toDoubleOrNull(),
-                    currentState.operation
-                )
-                val newOperation = when (label) {
-                    "+" -> Operation.ADD
-                    "-" -> Operation.SUBTRACT
-                    "×" -> Operation.MULTIPLY
-                    "÷" -> Operation.DIVIDE
-                    else -> null
+                if (currentState.isResultDisplayed) {
+                    _state.value = currentState.copy(
+                        firstOperand = currentState.displayText,
+                        secondOperand = "",
+                        operation = when (label) {
+                            "+" -> Operation.ADD
+                            "-" -> Operation.SUBTRACT
+                            "×" -> Operation.MULTIPLY
+                            "÷" -> Operation.DIVIDE
+                            else -> null
+                        },
+                        displayText = "",
+                        operationText = currentState.displayText + label, // Inicia nova operação
+                        isResultDisplayed = false
+                    )
+                } else if (currentState.operation != null && currentState.secondOperand.isNotEmpty()) {
+                    // Calcula resultado intermediário antes de definir a próxima operação
+                    val result = calculateResult(
+                        currentState.firstOperand.toDoubleOrNull(),
+                        currentState.secondOperand.toDoubleOrNull(),
+                        currentState.operation
+                    )
+                    _state.value = currentState.copy(
+                        firstOperand = result,
+                        secondOperand = "",
+                        operation = when (label) {
+                            "+" -> Operation.ADD
+                            "-" -> Operation.SUBTRACT
+                            "×" -> Operation.MULTIPLY
+                            "÷" -> Operation.DIVIDE
+                            else -> null
+                        },
+                        displayText = "",
+                        operationText = result + label, // Mostra resultado parcial e operador
+                        isResultDisplayed = false
+                    )
+                } else if (currentState.firstOperand.isNotEmpty()) {
+                    _state.value = currentState.copy(
+                        operation = when (label) {
+                            "+" -> Operation.ADD
+                            "-" -> Operation.SUBTRACT
+                            "×" -> Operation.MULTIPLY
+                            "÷" -> Operation.DIVIDE
+                            else -> null
+                        },
+                        displayText = "",
+                        operationText = currentState.firstOperand + label // Atualiza o texto da operação
+                    )
                 }
-                _state.value = currentState.copy(
-                    firstOperand = result,
-                    secondOperand = "",
-                    operation = newOperation,
-                    displayText = ""
-                )
             }
+
             "=" -> {
                 val result = calculateResult(
                     currentState.firstOperand.toDoubleOrNull(),
@@ -53,18 +105,20 @@ class CalculatorViewModel : ViewModel() {
                     currentState.operation
                 )
                 _state.value = currentState.copy(
-                    firstOperand = result,
+                    firstOperand = result.toString(),
                     secondOperand = "",
                     operation = null,
-                    displayText = result
+                    displayText = result.toString(),
+                    operationText = "", // Limpa o texto da operação
+                    isResultDisplayed = true
                 )
             }
+
             "C" -> {
                 _state.value = CalculatorState()
             }
         }
     }
-
 
     private fun calculateResult(
         firstOperand: Double?,
@@ -94,6 +148,4 @@ class CalculatorViewModel : ViewModel() {
             value.toString() // Mantém o formato de ponto flutuante se não for inteiro
         }
     }
-
-
 }
