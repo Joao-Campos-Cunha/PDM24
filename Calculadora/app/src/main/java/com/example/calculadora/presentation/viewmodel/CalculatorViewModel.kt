@@ -114,8 +114,47 @@ class CalculatorViewModel : ViewModel() {
                 )
             }
 
-            "C" -> {
+            "CE" -> {
                 _state.value = CalculatorState()
+            }
+
+            "√" -> { // Calcula a raiz quadrada
+                val currentNumber = currentState.displayText.toDoubleOrNull()
+                if (currentNumber != null && currentNumber >= 0) {
+                    val result = kotlin.math.sqrt(currentNumber)
+                    _state.value = currentState.copy(
+                        firstOperand = result.toString(),
+                        displayText = formatNumber(result),
+                        operationText = "",
+                        isResultDisplayed = true
+                    )
+                }
+            }
+
+            "+/-" -> { // Inverte o sinal do número no visor
+                val currentNumber = currentState.displayText.toDoubleOrNull()
+                if (currentNumber != null) {
+                    val result = -currentNumber
+                    _state.value = currentState.copy(
+                        firstOperand = result.toString(),
+                        displayText = formatNumber(result),
+                        operationText = "",
+                        isResultDisplayed = true
+                    )
+                }
+            }
+
+            "%" -> { // Calcula porcentagem
+                val currentNumber = currentState.displayText.toDoubleOrNull()
+                if (currentNumber != null) {
+                    val result = currentNumber / 100
+                    _state.value = currentState.copy(
+                        firstOperand = result.toString(),
+                        displayText = formatNumber(result),
+                        operationText = "",
+                        isResultDisplayed = true
+                    )
+                }
             }
         }
     }

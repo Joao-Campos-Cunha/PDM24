@@ -1,6 +1,8 @@
 package com.example.calculadora.presentation.ui
 
+import android.R.attr.fontWeight
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -20,13 +22,16 @@ fun Display(text: String, operationText: String) {
         text = displayContent,
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.LightGray)
+            .padding(16.dp)
+            .background(Color(0xffadba99))
+            .border(2.dp, Color.Black)
             .padding(16.dp),
-        fontSize = 48.sp,
+        fontSize = 35.sp,
         color = Color.Black,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.End,
         style = MaterialTheme.typography.headlineLarge
+
     )
 }
 
