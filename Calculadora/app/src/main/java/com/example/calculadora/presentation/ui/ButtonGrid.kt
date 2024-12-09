@@ -1,6 +1,5 @@
 package com.example.calculadora.presentation.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
