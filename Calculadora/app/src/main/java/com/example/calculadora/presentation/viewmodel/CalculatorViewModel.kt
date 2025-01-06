@@ -16,7 +16,6 @@ class CalculatorViewModel : ViewModel() {
         when (label) {
             in "0".."9", "." -> {
                 if (currentState.isResultDisplayed) {
-                    // Reinicia a operação após exibir o resultado
                     _state.value = CalculatorState(
                         firstOperand = label,
                         displayText = label
@@ -28,18 +27,18 @@ class CalculatorViewModel : ViewModel() {
                         currentState.secondOperand + label
                     }
 
-                    if (updatedText.length > 9) return // Limita o visor a 9 dígitos
-
-                    _state.value = if (currentState.operation == null) {
-                        currentState.copy(
-                            firstOperand = updatedText,
-                            displayText = updatedText
-                        )
-                    } else {
-                        currentState.copy(
-                            secondOperand = updatedText,
-                            displayText = updatedText
-                        )
+                    if (isValidLength(updatedText)) {
+                        _state.value = if (currentState.operation == null) {
+                            currentState.copy(
+                                firstOperand = updatedText,
+                                displayText = updatedText
+                            )
+                        } else {
+                            currentState.copy(
+                                secondOperand = updatedText,
+                                displayText = updatedText
+                            )
+                        }
                     }
                 }
             }
@@ -51,20 +50,19 @@ class CalculatorViewModel : ViewModel() {
                         operation = parseOperation(label)
                     )
                 } else if (currentState.operation != null && currentState.secondOperand.isNotEmpty()) {
-                    // Calcula o resultado intermediário antes de definir a próxima operação
                     val result = calculateResult(
                         currentState.firstOperand.toDoubleOrNull(),
                         currentState.secondOperand.toDoubleOrNull(),
                         currentState.operation
                     )
                     _state.value = CalculatorState(
-                        firstOperand = result,
+                        firstOperand = result.toString(),
                         operation = parseOperation(label)
                     )
                 } else if (currentState.firstOperand.isNotEmpty()) {
                     _state.value = currentState.copy(
                         operation = parseOperation(label),
-                        displayText = "" // Limpa o visor ao iniciar uma nova operação
+                        displayText = ""
                     )
                 }
             }
@@ -75,9 +73,11 @@ class CalculatorViewModel : ViewModel() {
                     currentState.secondOperand.toDoubleOrNull(),
                     currentState.operation
                 )
-                _state.value = CalculatorState(
-                    firstOperand = result,
-                    displayText = result,
+                _state.value = currentState.copy(
+                    firstOperand = result.toString(),
+                    secondOperand = "",
+                    operation = null,
+                    displayText = formatNumber(result),
                     isResultDisplayed = true
                 )
             }
@@ -86,7 +86,7 @@ class CalculatorViewModel : ViewModel() {
                 _state.value = CalculatorState()
             }
 
-            "√" -> { // Calcula a raiz quadrada
+            "√" -> {
                 val currentNumber = currentState.displayText.toDoubleOrNull()
                 if (currentNumber != null && currentNumber >= 0) {
                     val result = kotlin.math.sqrt(currentNumber)
@@ -98,27 +98,33 @@ class CalculatorViewModel : ViewModel() {
                 }
             }
 
-            "+/-" -> { // Inverte o sinal do número no visor
+            "+/-" -> {
                 val currentNumber = currentState.displayText.toDoubleOrNull()
                 if (currentNumber != null) {
                     val result = -currentNumber
-                    _state.value = CalculatorState(
-                        firstOperand = result.toString(),
-                        displayText = formatNumber(result),
-                        isResultDisplayed = true
-                    )
+                    val formattedResult = formatNumber(result)
+                    if (isValidLength(formattedResult)) {
+                        _state.value = currentState.copy(
+                            firstOperand = result.toString(),
+                            displayText = formattedResult,
+                            isResultDisplayed = true
+                        )
+                    }
                 }
             }
 
-            "%" -> { // Calcula porcentagem
+            "%" -> {
                 val currentNumber = currentState.displayText.toDoubleOrNull()
                 if (currentNumber != null) {
                     val result = currentNumber / 100
-                    _state.value = CalculatorState(
-                        firstOperand = result.toString(),
-                        displayText = formatNumber(result),
-                        isResultDisplayed = true
-                    )
+                    val formattedResult = formatNumber(result)
+                    if (isValidLength(formattedResult)) {
+                        _state.value = currentState.copy(
+                            firstOperand = result.toString(),
+                            displayText = formattedResult,
+                            isResultDisplayed = true
+                        )
+                    }
                 }
             }
         }
@@ -138,11 +144,11 @@ class CalculatorViewModel : ViewModel() {
         firstOperand: Double?,
         secondOperand: Double?,
         operation: Operation?
-    ): String {
-        if (firstOperand == null || operation == null) return "0"
-        if (secondOperand == null) return formatNumber(firstOperand)
+    ): Double {
+        if (firstOperand == null || operation == null) return 0.0
+        if (secondOperand == null) return firstOperand
 
-        val result = when (operation) {
+        return when (operation) {
             Operation.ADD -> firstOperand + secondOperand
             Operation.SUBTRACT -> firstOperand - secondOperand
             Operation.MULTIPLY -> firstOperand * secondOperand
@@ -152,14 +158,23 @@ class CalculatorViewModel : ViewModel() {
                 0.0 // Evita divisão por zero
             }
         }
-        return formatNumber(result)
     }
 
     private fun formatNumber(value: Double): String {
-        return if (value == value.toInt().toDouble()) {
-            value.toInt().toString() // Remove ".0" se for um número inteiro
+        val formatted = if (value == value.toInt().toDouble()) {
+            value.toInt().toString()
         } else {
-            value.toString() // Mantém o formato de ponto flutuante se não for inteiro
+            value.toString()
         }
+
+        return if (formatted.length > 9) {
+            "%e".format(value) // Notação científica se exceder 9 caracteres
+        } else {
+            formatted
+        }
+    }
+
+    private fun isValidLength(value: String): Boolean {
+        return value.replace("-", "").length <= 9 // Ignora o sinal negativo ao contar
     }
 }

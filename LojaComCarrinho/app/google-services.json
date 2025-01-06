@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "420029094952",
+    "project_id": "lojacomcarrinho",
+    "storage_bucket": "lojacomcarrinho.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420029094952:android:939a607f5288520420291d",
+        "android_client_info": {
+          "package_name": "com.example.lojacomcarrinho"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8pLTgmFgW_M-ogA_tNtOTQlKwpHU8vIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
