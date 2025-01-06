@@ -41,12 +41,17 @@ android {
 }
 
 dependencies {
-    implementation(libs.firebase.common.ktx)
-    implementation(libs.firebase.database.ktx)
-    implementation(libs.firebase.database)
-    implementation(libs.firebase.auth.ktx)
+    // Firebase BOM
     implementation(platform(libs.firebase.bom))
+
+    // Firebase Libraries
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.storage.ktx)
+
+    // Android Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -55,6 +60,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Testing Libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
