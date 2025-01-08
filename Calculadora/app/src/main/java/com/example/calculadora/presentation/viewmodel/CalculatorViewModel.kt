@@ -175,6 +175,6 @@ class CalculatorViewModel : ViewModel() {
     }
 
     private fun isValidLength(value: String): Boolean {
-        return value.replace("-", "").length <= 9 // Ignora o sinal negativo ao contar
+        return value.replace("-", "").length <= 10 // Ignora o sinal negativo ao contar
     }
 }
