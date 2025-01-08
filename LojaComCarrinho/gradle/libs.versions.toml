@@ -14,6 +14,9 @@ firebaseCommonKtx = "21.0.0"
 firebaseDatabaseKtx = "21.0.0"
 firebaseDatabase = "21.0.0"
 firebaseAuthKtx = "23.1.0"
+compose-runtime-livedata = "1.7.6" # Versão para runtime-livedata
+lifecycle-viewmodel-compose = "2.8.7" # Versão para ViewModel Compose
+
 
 
 
@@ -41,6 +44,10 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "compose-runtime-livedata" }
+lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
+androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.7.6" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.8.5" }
 
 # Testing Libraries
 junit = { group = "junit", name = "junit", version.ref = "junit" }

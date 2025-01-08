@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.lojacomcarrinho"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.lojacomcarrinho"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -52,6 +52,8 @@ dependencies {
     implementation(libs.firebase.storage.ktx)
 
     // Android Libraries
+    implementation(libs.compose.runtime.livedata) // Para usar observeAsState
+    implementation(libs.lifecycle.viewmodel.compose) // Para integrar ViewModel com Compose
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -60,6 +62,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.navigation.compose)
 
     // Testing Libraries
     testImplementation(libs.junit)

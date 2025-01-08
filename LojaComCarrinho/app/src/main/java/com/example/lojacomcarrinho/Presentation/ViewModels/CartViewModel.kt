@@ -62,8 +62,12 @@ class CartViewModel(private val manageCartUseCase: ManageCartUseCase) : ViewMode
         }
     }
 
-    private fun calculateTotalPrice(cartItems: List<CartItem>) {
+     fun calculateTotalPrice(cartItems: List<CartItem>) {
         val total = cartItems.sumOf { it.quantity * it.price }
         _totalPrice.postValue(total)
     }
+
+
+
+
 }

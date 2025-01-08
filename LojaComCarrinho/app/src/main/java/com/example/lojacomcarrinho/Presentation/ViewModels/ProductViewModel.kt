@@ -8,18 +8,23 @@ import com.example.lojacomcarrinho.Domain.usecase.FetchProductsUseCase
 
 class ProductViewModel(private val fetchProductsUseCase: FetchProductsUseCase) : ViewModel() {
 
-    private val _products = MutableLiveData<List<Product>>()
-    val products: LiveData<List<Product>> get() = _products
+    private val _productList = MutableLiveData<List<Product>>()
+    val productList: LiveData<List<Product>> get() = _productList
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> get() = _error
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
-    fun loadProducts() {
-        fetchProductsUseCase.execute { products, errorMessage ->
-            if (errorMessage != null) {
-                _error.postValue(errorMessage)
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> get() = _errorMessage
+
+    fun fetchProducts() {
+        _isLoading.value = true
+        fetchProductsUseCase.execute { products, error ->
+            _isLoading.postValue(false)
+            if (error == null) {
+                _productList.postValue(products)
             } else {
-                _products.postValue(products)
+                _errorMessage.postValue(error)
             }
         }
     }
