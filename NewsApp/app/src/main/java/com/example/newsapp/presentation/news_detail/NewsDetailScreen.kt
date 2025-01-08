@@ -55,10 +55,23 @@ fun NewsDetailScreen(
             )
 
             Text(
+                text = "Tipo: ${newsDetail.tipo}",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Text(
+                text = "Author: ${newsDetail.author}",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Text(
                 text = newsDetail.description,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
+
             Text(
                 text = "Read more: ${newsDetail.link}",
                 style = MaterialTheme.typography.bodySmall,

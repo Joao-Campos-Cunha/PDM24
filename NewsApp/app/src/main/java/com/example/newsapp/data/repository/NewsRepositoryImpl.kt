@@ -13,7 +13,9 @@ class NewsRepositoryImpl(private val api: NewsApi) : NewsRepository {
                     title = dto.title,
                     description = dto.abstract,
                     imageUrl = dto.multimedia?.firstOrNull()?.url ?: "",
-                    link = dto.url
+                    link = dto.url,
+                    author = dto.byline,
+                    tipo = dto.section
                 )
             } ?: emptyList()
         } else {
